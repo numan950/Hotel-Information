@@ -1,0 +1,45 @@
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+Room.remove({}, function(res){
+    console.log("removed records");
+});
+
+Room.count({}, function(err, count){
+    console.log("Rooms: " + count);
+
+    if(count === 0){
+
+        var recordsToGenerate = 150;
+
+        var roomTypes = [
+            'standard',
+            'villa',
+            'penthouse',
+            'studio'
+        ];
+
+  
+
+        for(var i = 0; i < recordsToGenerate; i++){
+            var newRoom = new Room({
+                room_number: i,
+                type: roomTypes[getRandomInt(0,3)],
+                beds: getRandomInt(1, 6),
+                max_occupancy: getRandomInt(1, 8),
+                cost_per_night: getRandomInt(50, 500),
+                reserved: [
+                    {from: '01-01-2020', to: '02-02-2020'},
+                    {from: '03-02-2020', to: '04-03-2020'},
+                    {from: '04-03-2020', to: '05-04-2020'}
+                ]
+            });
+
+            newRoom.save(function(err, doc){
+                console.log("Created test document: " + doc._id);
+            });
+        } 
+
+    }
+});

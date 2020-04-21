@@ -1,0 +1,13 @@
+var Room = mongoose.model('Room', {
+    room_number: Number,
+    type: String,
+    beds: Number,
+    max_occupancy: Number,
+    cost_per_night: Number,
+    reserved: [
+        {
+            from: String,
+            to: String
+        }
+    ]
+});
